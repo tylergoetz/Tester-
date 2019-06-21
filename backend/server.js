@@ -4,11 +4,16 @@ var cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const Data = require("./data");
+var path = require("path");
 
 const API_PORT = 3001;
 const app = express();
+
 app.use(cors());
 const router = express.Router();
+
+var dir = path.join(__dirname, "../client/public");
+app.use(express.static(dir));
 
 // this is our MongoDB database
 const dbRoute =
@@ -28,7 +33,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 // bodyParser, parses the request body to be a readable json format
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(logger("dev"));
+//app.use(logger("dev"));
 
 // this is our get method
 // this method fetches all available data in our database
@@ -38,6 +43,8 @@ router.get("/getData", (req, res) => {
     return res.json({ success: true, data: data });
   });
 });
+
+console.info(__dirname);
 
 // this is our update method
 // this method overwrites existing data in our database

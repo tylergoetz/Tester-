@@ -50,7 +50,7 @@ class App extends Component {
 
   // our put method that uses our backend api
   // to create new query into our data base
-  putDataToDB = function(message, type) {
+  putDataToDB = function (message, type) {
     let currentIds = this.state.data.map(data => data.id);
     let idToBeAdded = 0;
     while (currentIds.includes(idToBeAdded)) {
@@ -105,28 +105,75 @@ class App extends Component {
   render() {
     const { data } = this.state;
     return (
-      <div>
+      <div className="bg-dark">
         <h1>
           Tester <p className="text-muted"> v0.1 </p>
         </h1>
-        <ul className="list-group">
-          {data.length <= 0
-            ? "NO DB ENTRIES YET"
-            : data.map(dat => (
-                <li
-                  className="list-group-item"
-                  style={{ padding: "10px" }}
-                  key={data.message}
+        <div className="container">
+          <div className="input-group">
+            <input
+              type="text"
+              className="form-control"
+              onChange={e => this.setState({ message: e.target.value })}
+              placeholder="add something in the database"
+              aria-label="Text input with dropdown button"
+            />
+            <button
+              className="btn btn-primary"
+              onClick={() =>
+                this.putDataToDB(this.state.message, this.state.type)
+              }
+            >
+              ADD
+          </button>
+          </div>
+          <div className="row">
+            {data.length <= 0
+              ? "NO DB ENTRIES YET"
+              : data.map(dat => (
+                /*<li
+                className="list-group-item"
+                style={{ padding: "10px" }}
+                key={data.message}
+              >
+                <span style={{ color: "gray" }}> id: </span> {dat.id} <br />
+                <span style={{ color: "gray" }}> data: </span>
+                {dat.message}
+                <br />
+                <span style={{ color: "gray" }}> type: </span> {dat.type}
+              </li>
+              */
+                <div
+                  className="card"
+                  style={{ width: "18rem", margin: "1rem" }}
                 >
-                  <span style={{ color: "gray" }}> id: </span> {dat.id} <br />
-                  <span style={{ color: "gray" }}> data: </span>
-                  {dat.message}
-                  <br />
-                  <span style={{ color: "gray" }}> type: </span> {dat.type}
-                </li>
+                  <img
+                    className="card-img"
+                    src="..."
+                    alt="Card image cap"
+                    height="200px"
+                  />
+                  <div className="card-img-overlay">
+                    <h5 className="card-title">{dat.message}</h5>
+                    <p className="card-text">Tags:</p>
+                  </div>
+                  <ul className="list-group list-group-flush">
+                    <li className="list-group-item">{dat.id}</li>
+                    <li className="list-group-item">{dat.message}</li>
+                    <li className="list-group-item">{dat.type}</li>
+                  </ul>
+                  <div className="card-body">
+                    <a href="#" className="card-link">
+                      Brief
+                      </a>
+                    <a href="#" className="card-link">
+                      Buy
+                      </a>
+                  </div>
+                </div>
               ))}
-        </ul>
-
+          </div>
+        </div>
         <div className="input-group mb-3">
           <div className="input-group-prepend">
             <button
@@ -149,22 +196,18 @@ class App extends Component {
               </a>
               <a
                 className="dropdown-item"
-                href="#"
                 onClick={e => this.setState({ type: "2" })}
               >
                 Another action
               </a>
               <a
                 className="dropdown-item"
-                href="#"
                 onClick={e => this.setState({ type: "3" })}
               >
                 Something else here
               </a>
               <div role="separator" className="dropdown-divider" />
-              <a className="dropdown-item" href="#">
-                Separated link
-              </a>
+              <a className="dropdown-item">Other</a>
             </div>
           </div>
           <input
@@ -217,7 +260,7 @@ class App extends Component {
             UPDATE
           </button>
         </div>
-      </div>
+      </div >
     );
   }
 }
